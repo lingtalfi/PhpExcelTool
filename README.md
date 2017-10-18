@@ -42,11 +42,34 @@ $colValues = PhpExcelTool::getColumnValues("C", $file);
 ```
 
 
+```php
+<?php
+
+$rows = [];
+// populating rows...
+
+$target = __DIR__ . "/baked/liste-salle-sport.xlsx";
+$ret = PhpExcelTool::createExcelFileByData($target, $rows, [
+    'propertiesFn' => function (PHPExcel_DocumentProperties $props) {
+        $props->setCreator("LingTalfi")
+            ->setTitle("Liste des salles de sport")
+            ->setSubject("Liste des salles");
+    }
+]);
+a($ret); // null, means ok
+
+```
+
+
 
 
 
 History Log
 ------------------
+    
+- 1.1.0 -- 2017-10-18
+
+    - add PhpExcelTool::createExcelFileByData method
     
 - 1.0.0 -- 2017-10-17
 
