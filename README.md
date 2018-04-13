@@ -20,14 +20,6 @@ Or just download it and place it where you want otherwise.
 
 
 
-Depends on
-=============
-
-Prior to the planet install, you need to manually install the following library:
-
-- https://github.com/PHPOffice/PHPExcel
-
-
 
 How to
 ==========
@@ -40,6 +32,9 @@ $file = "/Users/me/Downloads/Liste des Villes Equipements.xlsx";
 $colValues = PhpExcelTool::getColumnValues("C", $file);
 
 ```
+
+
+
 
 
 ```php
@@ -61,11 +56,25 @@ a($ret); // null, means ok
 ```
 
 
-
+```php
+<?php 
+$file = "/myphp/leaderfit/leaderfit/class-modules/ThisApp/assets/fixtures/ID_CATEGORIES.XLSX";
+$rows = PhpExcelTool::getColumnsAsRows([
+    "A" => "parent_id",
+    "B" => "id",
+    "C" => "name",
+], $file, 1);
+az($rows);
+```
 
 
 History Log
 ------------------
+    
+- 1.2.0 -- 2018-04-13
+
+    - add getColumnsAsRows method
+    - Now ships with the PHPOffice/PHPExcel library, since it's marked as deprecated by its authors
     
 - 1.1.0 -- 2017-10-18
 

@@ -28,6 +28,7 @@ class PhpExcelTool
      */
     public static function getColumnValues($columnName, $file)
     {
+        self::init();
         $ret = [];
         $objPHPExcel = \PHPExcel_IOFactory::load($file);
         $worksheet = $objPHPExcel->getActiveSheet();
@@ -36,6 +37,31 @@ class PhpExcelTool
             $cell = $worksheet->getCell($columnName . $row);
             $val = $cell->getValue();
             $ret[] = $val;
+        }
+        return $ret;
+    }
+
+    public static function getColumnsAsRows(array $columnName2Keys, string $file, int $skipNLines = 0)
+    {
+        self::init();
+        $ret = [];
+        $objPHPExcel = \PHPExcel_IOFactory::load($file);
+        $worksheet = $objPHPExcel->getActiveSheet();
+        $lastRow = $worksheet->getHighestRow();
+        for ($row = 1; $row <= $lastRow; $row++) {
+
+            if ($skipNLines > 0) {
+                $skipNLines--;
+                continue;
+            }
+
+            $returnRow = [];
+            foreach ($columnName2Keys as $columnName => $key) {
+                $cell = $worksheet->getCell($columnName . $row);
+                $val = $cell->getValue();
+                $returnRow[$key] = $val;
+            }
+            $ret[] = $returnRow;
         }
         return $ret;
     }
@@ -70,6 +96,7 @@ class PhpExcelTool
      */
     public static function createExcelFileByData($file, array $data, array $options = [])
     {
+        self::init();
 
         if ($data) {
 
@@ -121,6 +148,16 @@ class PhpExcelTool
             return $objWriter->save($file);
         }
         return false;
+    }
+
+
+
+    //--------------------------------------------
+    //
+    //--------------------------------------------
+    private static function init()
+    {
+        require_once __DIR__ . "/PHPExcel/Classes/PHPExcel.php";
     }
 
 }
