@@ -156,6 +156,17 @@ class PhpExcelTool
     }
 
 
+    /**
+     *
+     * This method creates a table (in the database) from the given XLSX file.
+     *
+     *
+     *
+     * @param string $file
+     * @param array $columnsMap
+     * @param array $options
+     * @throws \QuickPdo\Exception\QuickPdoException
+     */
     public static function file2Table(string $file, array $columnsMap, array $options = [])
     {
         $skipFirstLine = $options['skipFirstLine'] ?? true;
