@@ -203,11 +203,8 @@ ENGINE = InnoDB;
                     return trim($v);
                 }, $row);
             }
-            // todo: not handled by quickpdo yet...
             QuickPdo::insert("`$database`.`$tableName`", $row);
         }
-
-
     }
 
 

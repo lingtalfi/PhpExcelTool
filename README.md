@@ -68,9 +68,38 @@ az($rows);
 ```
 
 
+
+Creating a table (in the database) corresponding to a XLSX file
+-------------------------
+
+Note that this method requires the [QuickPdo](https://github.com/lingtalfi/Quickpdo) planet.
+
+
+```php
+<?php
+
+$file = "/Users/meeee/Downloads/LIEUX__FORMATIONS-1.XLSX";
+
+PhpExcelTool::file2Table($file, [
+    // A is the name of the first column in a regular XLSX file, reference is the name of the
+    // column I want in the mysql table
+   "A" => "reference",
+   "B" => "lieu",
+], [
+    'database' => "formation_tmp",
+]);
+
+
+```
+
+
 History Log
 ------------------
     
+- 1.3.0 -- 2018-04-30
+
+    - add PhpExcelTool::file2Table method
+
 - 1.2.0 -- 2018-04-13
 
     - add getColumnsAsRows method
