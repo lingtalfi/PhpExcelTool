@@ -3,6 +3,11 @@
 
 namespace PhpExcelTool;
 
+use Bat\CaseTool;
+use Bat\FileSystemTool;
+use QuickPdo\QuickPdo;
+use QuickPdo\QuickPdoInfoTool;
+
 
 /**
  * Class PhpExcelTool
@@ -148,6 +153,61 @@ class PhpExcelTool
             return $objWriter->save($file);
         }
         return false;
+    }
+
+
+    public static function file2Table(string $file, array $columnsMap, array $options = [])
+    {
+        $skipFirstLine = $options['skipFirstLine'] ?? true;
+        $tableName = $options['tableName'] ?? null;
+        $trimValues = $options['trimValues'] ?? true;
+        $database = $options['database'] ?? QuickPdoInfoTool::getDatabase();
+        if (null === $tableName) {
+            $tableName = CaseTool::toSnake(FileSystemTool::getFileName($file));
+        }
+
+        $nbLinesToSkip = (true === $skipFirstLine) ? 1 : 0;
+        $cols = self::getColumnsAsRows($columnsMap, $file, $nbLinesToSkip);
+
+
+        //--------------------------------------------
+        // CREATE THE TABLE
+        //--------------------------------------------
+        $sFields = "";
+        $c = 0;
+        foreach ($columnsMap as $column) {
+            if (0 !== $c) {
+                $sFields .= "," . PHP_EOL;
+            }
+            $type = "VARCHAR(256)";
+            $sFields .= "\t`$column` $type NOT NULL";
+            $c++;
+        }
+        $createTableQuery = "
+CREATE TABLE IF NOT EXISTS `$database`.`$tableName` (
+$sFields
+)
+ENGINE = InnoDB;        
+        ";
+
+        QuickPdo::freeQuery($createTableQuery);
+
+
+        //--------------------------------------------
+        // FILL THE ROWS
+        //--------------------------------------------
+        foreach ($cols as $row) {
+
+            if (true === $trimValues) {
+                $row = array_map(function($v){
+                    return trim($v);
+                }, $row);
+            }
+            // todo: not handled by quickpdo yet...
+            QuickPdo::insert("`$database`.`$tableName`", $row);
+        }
+
+
     }
 
 
