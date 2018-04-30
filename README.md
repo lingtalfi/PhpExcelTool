@@ -93,9 +93,39 @@ PhpExcelTool::file2Table($file, [
 ```
 
 
+Using a rowCallback function to format some values...
+
+```php
+<?php
+
+$file = "/Users/meeee/Downloads/DATES__FORMATIONS-2.XLSX";
+PhpExcelTool::file2Table($file, [
+    "A" => "reference",
+    "B" => "ref_formation",
+    "C" => "date_depart",
+], [
+    'database' => "formation_tmp",
+    'tableName' => "dates_formations",
+    'rowCallback' => function ($column, $value, array $row) {
+        if ('date_depart' === $column) {
+            $value = PhpExcelToolHelper::asDate($value, "1899-12-30");
+        }
+        return $value;
+    },
+]);
+
+
+```
+
+
 History Log
 ------------------
     
+- 1.4.0 -- 2018-04-30
+
+    - add PhpExcelTool::file2Table rowCallback option
+    - add PhpExcelToolHelper class
+
 - 1.3.0 -- 2018-04-30
 
     - add PhpExcelTool::file2Table method

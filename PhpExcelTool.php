@@ -172,6 +172,9 @@ class PhpExcelTool
         $skipFirstLine = $options['skipFirstLine'] ?? true;
         $tableName = $options['tableName'] ?? null;
         $trimValues = $options['trimValues'] ?? true;
+        $rowCallback = $options['rowCallback'] ?? null;
+
+
         $database = $options['database'] ?? QuickPdoInfoTool::getDatabase();
         if (null === $tableName) {
             $tableName = CaseTool::toSnake(FileSystemTool::getFileName($file));
@@ -179,7 +182,6 @@ class PhpExcelTool
 
         $nbLinesToSkip = (true === $skipFirstLine) ? 1 : 0;
         $cols = self::getColumnsAsRows($columnsMap, $file, $nbLinesToSkip);
-
 
         //--------------------------------------------
         // CREATE THE TABLE
@@ -210,10 +212,18 @@ ENGINE = InnoDB;
         foreach ($cols as $row) {
 
             if (true === $trimValues) {
-                $row = array_map(function($v){
+                $row = array_map(function ($v) {
                     return trim($v);
                 }, $row);
             }
+
+            if (is_callable($rowCallback)) {
+                foreach ($row as $key => $value) {
+                    $newValue = $rowCallback($key, $value, $row);
+                    $row[$key] = $newValue;
+                }
+            }
+
             QuickPdo::insert("`$database`.`$tableName`", $row);
         }
     }
