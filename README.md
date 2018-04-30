@@ -76,36 +76,38 @@ Note that this method requires the [QuickPdo](https://github.com/lingtalfi/Quick
 
 
 ```php
-<?php
 
-$file = "/Users/meeee/Downloads/LIEUX__FORMATIONS-1.XLSX";
+// simplest example, using the defaults
+$file = "/Users/miaou/Downloads/DESCRIPTIF__FORMATIONS-1.XLSX";
+PhpExcelTool::file2Table($file);
 
+
+
+// example with a column map
+$file = "/Users/miaou/Downloads/LIEUX__FORMATIONS-1.XLSX";
 PhpExcelTool::file2Table($file, [
-    // A is the name of the first column in a regular XLSX file, reference is the name of the
-    // column I want in the mysql table
-   "A" => "reference",
-   "B" => "lieu",
-], [
     'database' => "formation_tmp",
+    'columnsMap' => [
+        "A" => "reference",
+        "B" => "lieu",
+    ],
 ]);
 
 
-```
-
-
-Using a rowCallback function to format some values...
-
-```php
-<?php
-
-$file = "/Users/meeee/Downloads/DATES__FORMATIONS-2.XLSX";
+// another example with a column map and a rowCallback function to fix the dates
+/**
+ * Note that by default dates are stored as number of days from an origin date in excel
+ * (at least from what I read)
+ */
+$file = "/Users/miaou/Downloads/DATES__FORMATIONS-2.XLSX";
 PhpExcelTool::file2Table($file, [
-    "A" => "reference",
-    "B" => "ref_formation",
-    "C" => "date_depart",
-], [
     'database' => "formation_tmp",
     'tableName' => "dates_formations",
+    'columnsMap' => [
+        "A" => "reference",
+        "B" => "ref_formation",
+        "C" => "date_depart",
+    ],
     'rowCallback' => function ($column, $value, array $row) {
         if ('date_depart' === $column) {
             $value = PhpExcelToolHelper::asDate($value, "1899-12-30");
@@ -115,12 +117,27 @@ PhpExcelTool::file2Table($file, [
 ]);
 
 
+// another example using the column types map
+$file = "/Users/miaou/Downloads/DESCRIPTIF__FORMATIONS-1.XLSX";
+PhpExcelTool::file2Table($file, [
+    'database' => "formation_tmp",
+    'tableName' => "details_formation",
+    'colTypes' => [
+        "I" => "TEXT",
+    ],
+]);
+
+
 ```
 
 
 History Log
 ------------------
     
+- 1.5.0 -- 2018-05-01
+
+    - update PhpExcelTool::file2Table, moved the second argument to options, allowing smaller invocation code
+
 - 1.4.0 -- 2018-04-30
 
     - add PhpExcelTool::file2Table rowCallback option
