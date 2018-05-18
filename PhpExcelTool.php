@@ -268,6 +268,12 @@ ENGINE = InnoDB;
     }
 
 
+    public static function table2File(string $table, string $file)
+    {
+        $data = QuickPdo::fetchAll("select * from $table");
+        return self::createExcelFileByData($file, $data);
+    }
+
 
     //--------------------------------------------
     //

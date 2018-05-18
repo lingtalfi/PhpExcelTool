@@ -134,6 +134,10 @@ PhpExcelTool::file2Table($file, [
 History Log
 ------------------
     
+- 1.6.0 -- 2018-05-18
+
+    - add PhpExcelTool::table2File method 
+    
 - 1.5.1 -- 2018-05-18
 
     - fix internal letter incrementor now can handle multiple letters (A -> AG) 
