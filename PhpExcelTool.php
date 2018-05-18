@@ -205,7 +205,6 @@ class PhpExcelTool
         $colTypes = $options['colTypes'] ?? [];
         $columnsMap = $options['columnsMap'] ?? self::getFirstRow($file);
 
-
         $nbLinesToSkip = (true === $skipFirstLine) ? 1 : 0;
         /**
          * We want the first row anyway in case the user wants us to guess
@@ -287,13 +286,29 @@ ENGINE = InnoDB;
         $worksheet = $objPHPExcel->getActiveSheet();
         $lastColumn = $worksheet->getHighestColumn();
         $n = 0;
-        for ($col = "A"; $col <= $lastColumn; $col++) {
+        $col = "A";
+        $isLastColumnNow = false;
+        while (true) {
+
             $cell = $worksheet->getCell($col . "1");
             $val = $cell->getValue();
             $ret[$col] = $val;
-            if ($n++ > 100) { // prevent infinite loop, just in case
-                exit;
+
+            $col++;
+            $n++;
+            // if you have more than 100 cols, increase this number...
+            if ($n > 100) {
+                break;
             }
+
+            if (true === $isLastColumnNow) {
+                break;
+            }
+
+            if ($lastColumn === $col) {
+                $isLastColumnNow = true;
+            }
+
         }
         return $ret;
     }
