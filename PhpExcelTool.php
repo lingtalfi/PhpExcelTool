@@ -90,10 +90,11 @@ class PhpExcelTool
         return $ret;
     }
 
-    public static function getRowValues($rowName, string $file)
+    public static function getRowValues($rowName, string $file, array $options = [])
     {
         self::init();
         $ret = [];
+        $useLetterAsKey = $options['useLetterAsKey'] ?? false;
         $objPHPExcel = \PHPExcel_IOFactory::load($file);
         $worksheet = $objPHPExcel->getActiveSheet();
         $lastCol = $worksheet->getHighestColumn();
@@ -102,8 +103,11 @@ class PhpExcelTool
         while (true) {
             $cell = $worksheet->getCell($letter . $rowName);
             $val = $cell->getValue();
-            $ret[] = $val;
-
+            if (false === $useLetterAsKey) {
+                $ret[] = $val;
+            } else {
+                $ret[$letter] = $val;
+            }
 
             if ($lastCol === $letter) {
                 break;

@@ -134,6 +134,10 @@ PhpExcelTool::file2Table($file, [
 History Log
 ------------------
     
+- 1.9.0 -- 2018-05-29
+
+    - add PhpExcelTool::getRowValues useLetterAsKey option 
+    
 - 1.8.0 -- 2018-05-29
 
     - add PhpExcelTool::getRowValues method 
