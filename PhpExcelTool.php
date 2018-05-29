@@ -27,6 +27,7 @@ use QuickPdo\QuickPdoInfoTool;
 class PhpExcelTool
 {
 
+
     public static function getAllAsRows(string $file)
     {
         self::init();
@@ -74,7 +75,7 @@ class PhpExcelTool
      * @param $columnName , str the name of the column (i.e. A, B, ...)
      * @return $ret array, an array containing all the values for column $columnName
      */
-    public static function getColumnValues($columnName, $file)
+    public static function getColumnValues($columnName, string $file)
     {
         self::init();
         $ret = [];
@@ -88,6 +89,36 @@ class PhpExcelTool
         }
         return $ret;
     }
+
+    public static function getRowValues($rowName, string $file)
+    {
+        self::init();
+        $ret = [];
+        $objPHPExcel = \PHPExcel_IOFactory::load($file);
+        $worksheet = $objPHPExcel->getActiveSheet();
+        $lastCol = $worksheet->getHighestColumn();
+        $letter = 'A';
+        $c = 0;
+        while (true) {
+            $cell = $worksheet->getCell($letter . $rowName);
+            $val = $cell->getValue();
+            $ret[] = $val;
+
+
+            if ($lastCol === $letter) {
+                break;
+            }
+
+            $letter++;
+
+            // infinite loop prevention
+            if ($c++ > 100) {
+                break;
+            }
+        }
+        return $ret;
+    }
+
 
     public static function getColumnsAsRows(array $columnName2Keys, string $file, int $skipNLines = 0)
     {
