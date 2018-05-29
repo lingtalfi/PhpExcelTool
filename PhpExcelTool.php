@@ -27,6 +27,49 @@ use QuickPdo\QuickPdoInfoTool;
 class PhpExcelTool
 {
 
+    public static function getAllAsRows(string $file)
+    {
+        self::init();
+        $ret = [];
+        $objPHPExcel = \PHPExcel_IOFactory::load($file);
+        $worksheet = $objPHPExcel->getActiveSheet();
+        $lastRow = $worksheet->getHighestRow();
+        $lastCol = $worksheet->getHighestColumn();
+
+
+        for ($row = 1; $row <= $lastRow; $row++) {
+            $returnRow = [];
+            $letter = 'A';
+            $c = 0;
+            while (true) {
+
+
+                $cell = $worksheet->getCell($letter . $row);
+                $val = $cell->getValue();
+                $returnRow[$letter] = $val;
+
+
+                //
+                $letter++;
+                if ($lastCol === $letter) {
+                    break;
+                }
+
+
+                // infinite loop prevention, if you have more than 100 columns increase this number
+                $c++;
+                if ($c > 100) {
+                    break;
+                }
+            }
+
+            $ret[] = $returnRow;
+        }
+
+
+        return $ret;
+    }
+
     /**
      * @param $columnName , str the name of the column (i.e. A, B, ...)
      * @return $ret array, an array containing all the values for column $columnName

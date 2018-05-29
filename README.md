@@ -134,6 +134,10 @@ PhpExcelTool::file2Table($file, [
 History Log
 ------------------
     
+- 1.7.0 -- 2018-05-29
+
+    - add PhpExcelTool::getAllAsRows method 
+    
 - 1.6.0 -- 2018-05-18
 
     - add PhpExcelTool::table2File method 
