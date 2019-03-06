@@ -1,7 +1,7 @@
 <?php
 
 
-namespace PhpExcelTool\Helper;
+namespace Ling\PhpExcelTool\Helper;
 
 class PhpExcelToolHelper
 {

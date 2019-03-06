@@ -1,12 +1,12 @@
 <?php
 
 
-namespace PhpExcelTool;
+namespace Ling\PhpExcelTool;
 
-use Bat\CaseTool;
-use Bat\FileSystemTool;
-use QuickPdo\QuickPdo;
-use QuickPdo\QuickPdoInfoTool;
+use Ling\Bat\CaseTool;
+use Ling\Bat\FileSystemTool;
+use Ling\QuickPdo\QuickPdo;
+use Ling\QuickPdo\QuickPdoInfoTool;
 
 
 /**
