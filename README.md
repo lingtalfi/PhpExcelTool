@@ -21,6 +21,17 @@ Or just download it and place it where you want otherwise.
 
 
 
+Documentation
+==========
+- [PhpExcelTool api](https://github.com/lingtalfi/PhpExcelTool/blob/master/doc/api/Ling/PhpExcelTool.md) (generated with [DocTools](https://github.com/lingtalfi/DocTools))
+
+
+
+
+
+
+
+
 How to
 ==========
 
@@ -142,6 +153,10 @@ PhpExcelTool::file2Table($file, [
 
 History Log
 ------------------
+    
+- 1.9.2 -- 2019-10-08
+
+    - add doc link
     
 - 1.9.1 -- 2019-10-08
 
