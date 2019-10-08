@@ -25,6 +25,9 @@ How to
 ==========
 
 
+Accessing values from a specific column
+--------------
+
 ```php
 <?php
 
@@ -36,6 +39,8 @@ $colValues = PhpExcelTool::getColumnValues("C", $file);
 
 
 
+Creating an xsl file
+---------------
 
 ```php
 <?php
@@ -56,6 +61,10 @@ a($ret); // null, means ok
 ```
 
 
+
+
+Accessing values from multiple columns
+--------------------
 ```php
 <?php 
 $file = "/myphp/leaderfit/leaderfit/class-modules/ThisApp/assets/fixtures/ID_CATEGORIES.XLSX";
@@ -133,6 +142,10 @@ PhpExcelTool::file2Table($file, [
 
 History Log
 ------------------
+    
+- 1.9.1 -- 2019-10-08
+
+    - add doc 
     
 - 1.9.0 -- 2018-05-29
 
