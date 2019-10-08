@@ -3,6 +3,10 @@ PhpExcelTool
 2017-10-17
 
 
+Deprecated warning: this planet is now deprecated in favor of the better
+[PhpSpreadSheetTool](https://github.com/lingtalfi/PhpSpreadSheetTool) tool.
+
+
 A personal helper for using the PHPOffice/PHPExcel library.
 
 
@@ -151,8 +155,18 @@ PhpExcelTool::file2Table($file, [
 ```
 
 
+Related
+=========
+- [PhpSpreadSheetTool](https://github.com/lingtalfi/PhpSpreadSheetTool), the newest/recommended version of PhpExcelTool
+
+
+
 History Log
 ------------------
+    
+- 1.9.3 -- 2019-10-08
+
+    - add deprecation notice
     
 - 1.9.2 -- 2019-10-08
 
