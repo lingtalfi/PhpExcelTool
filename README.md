@@ -163,7 +163,11 @@ Related
 
 History Log
 ------------------
-    
+
+- 1.9.5 -- 2020-12-04
+
+    - Add lpi-deps.byml file
+
 - 1.9.4 -- 2019-11-06
 
     - update api to work with Bat 1.279
